@@ -12,7 +12,7 @@ def start():
 
 @bottle.post('/chooseAction')
 def move():
-    data = PublicGameState(jsonString=bottle.request.json)
+    print(bottle.request.json)
     # TODO: Do things with data
     return random.choice(list(Directions))
 
