@@ -5,7 +5,7 @@ from app.dto.HelperDTOs import Directions
 from app.dto.PublicGameState import PublicGameState
 from app.dto.PublicPlayer import PublicPlayer
 
-@bottle.post('/chooseAction')
+@bottle.post('/start')
 def start():
     return "SomeFancyTeamName"
 
