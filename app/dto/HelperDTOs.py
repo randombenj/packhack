@@ -1,3 +1,4 @@
+#Do not use this Directions cause it is only for receiving purposes
 class Directions:
     NORTH = 'North'
     SOUTH = 'South'

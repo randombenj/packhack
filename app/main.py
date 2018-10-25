@@ -1,9 +1,11 @@
 import random
 import bottle
 import os
-from app.dto.HelperDTOs import Directions
+
 from app.dto.PublicGameState import PublicGameState
 from app.dto.PublicPlayer import PublicPlayer
+from app.dto.ReturnDirections import ReturnDirections
+
 
 @bottle.post('/start')
 def start():
@@ -12,9 +14,9 @@ def start():
 
 @bottle.post('/chooseAction')
 def move():
-    print(bottle.request.json)
-    # TODO: Do things with data
-    return random.choice(list(Directions))
+    data = PublicGameState(ext_dict=bottle.request.json)
+    # TODO: Do things with data acces via data
+    return ReturnDirections.random()
 
 application = bottle.default_app()
 if __name__ == '__main__':
