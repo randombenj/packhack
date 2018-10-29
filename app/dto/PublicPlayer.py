@@ -2,11 +2,11 @@ from app.dto.HelperDTOs import Directions
 
 
 class PublicPlayer:
-    def __init__(self, isPacman=True, direction=Directions.NORTH, position=[0, 0], jsonString=None, activeCapsule=False):
+    def __init__(self, isPacman=True, direction=Directions.NORTH, position=[0, 0], jsonString=None, weakenend=False):
         self.isPacman = isPacman
         self.direction = direction
         self.position = position
-        self.activeCapsule = activeCapsule
+        self.weakenend = weakenend
         if (jsonString != None):
             self.__dict__ = jsonString
 
