@@ -23,6 +23,6 @@ class Directions:
 class PublicFields:
     EMPTY = " "
     WALL = "%"
-    WALL = "°"
-    PLAYER = "P"
+    FOOD = "°"
+    CAPSULE = "o"
 
