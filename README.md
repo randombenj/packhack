@@ -1,6 +1,10 @@
 # packhack
 
 The best packhack client.
+We ([@randombenj](https://github.com/randombenj) and [@fliiiix](https://github.com/fliiiix))
+made third place with this bot. Special thanks to [@timofurrer](https://github.com/timofurrer) 🎉
+for helping out.
+
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
@@ -10,13 +14,18 @@ The best packhack client.
 * experience [deploying Python apps to Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
 * [pip](https://pip.pypa.io/en/latest/installing.html) to install Python dependencies
 
-## Running the Snake Locally
+## Running the Packhack Locally
 
-1) [Fork this repo](https://github.com/stair-ch/snakehack-python/fork).
 
-2) Clone repo to your development environment:
+1) Clone repo to your development environment:
 ```
-git clone git@github.com:username/snakehack-python.git
+git clone git@github.com:randombenj/packhack.git
+```
+
+2) Create a virtualenv
+```
+virtualenv env
+source env/bin/activate
 ```
 
 3) Install dependencies using [pip](https://pip.pypa.io/en/latest/installing.html):
@@ -30,6 +39,10 @@ python3 -m app
 ```
 
 5) Test client in your browser: [http://localhost:8080](http://localhost:8080).
+
+6) Test against other bots
+Use [python_local_game](https://github.com/stairch/hslu_18hs_stair_pachack_python_local_game). Hints start this app fist and then run `python3 capture.py`. Also use the config in
+`settings.ini`.
 
 ## Deploying to Heroku
 
