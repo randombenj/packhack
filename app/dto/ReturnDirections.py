@@ -25,5 +25,4 @@ class ReturnDirections():
     @classmethod
     def random(cls):
         return random.choice(
-            [ReturnDirections.SOUTH, ReturnDirections.NORTH, ReturnDirections.EAST, ReturnDirections.WEST,
-             ReturnDirections.STOP])
+            [ReturnDirections.SOUTH, ReturnDirections.NORTH, ReturnDirections.EAST, ReturnDirections.WEST])

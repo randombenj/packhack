@@ -1,8 +1,6 @@
-# snakehack-python
+# packhack
 
-A simple snakehack written in Python.
-
-This AI client uses the [bottle web framework](http://bottlepy.org/docs/dev/index.html) to serve requests and the [gunicorn web server](http://gunicorn.org/) for running bottle on Heroku. Dependencies are listed in [requirements.txt](requirements.txt).
+The best packhack client.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
@@ -28,7 +26,7 @@ pip install -r requirements.txt
 
 4) Run local server:
 ```
-python app/main.py
+python3 -m app
 ```
 
 5) Test client in your browser: [http://localhost:8080](http://localhost:8080).

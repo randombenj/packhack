@@ -4,6 +4,7 @@ from app.dto.PublicPlayer import PublicPlayer
 
 class PublicGameState:
     def __init__(self, ext_dict=None):
+        self.agent_id = 0
         self.gameField = [[]]
         self.publicPlayers = []
         if ext_dict is not None:
