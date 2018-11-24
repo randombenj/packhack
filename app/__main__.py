@@ -6,8 +6,6 @@ from app.dto.PublicGameState import PublicGameState
 from app.dto.PublicPlayer import PublicPlayer
 from app.dto.ReturnDirections import ReturnDirections
 
-global last_move
-last_move = None
 
 @bottle.post('/start')
 def start():
@@ -27,9 +25,12 @@ def move():
     printStateNice(data)
     print("OUR X: {}, OUR Y: {}".format(our_x, our_y))
 
+    desired_point = find_point(game_grid)
+    print("DESIRED POINT", desired_point)
+
     print()
     finder = PathFinder(None, None, weighted_game_grid)
-    path = list(finder.astar((int(our_x), int(our_y)), (int(our_x + 0), int(our_y + 5))))
+    path = list(finder.astar((int(our_x), int(our_y)), desired_point))
 
     print("PATH", path)
     next_x, next_y = path[1]
@@ -38,7 +39,16 @@ def move():
     move_x = next_x - our_x
     move_y = next_y - our_y
 
-    return get_direction(move_x, move_y)
+    #return get_direction(move_x, move_y)
+    return ReturnDirections.NORTH
+
+def find_point(game_grid):
+    half_of_length = int(len(game_grid[0]) / 2)
+    for y, rows in enumerate(game_grid):
+        if "o" in rows[half_of_length:]:
+            x = rows[half_of_length:].index("o")
+            return (x, y)
+
 
 def get_weighted_game_grid(game_grid):
     weighted_game_grid = []
@@ -59,22 +69,22 @@ def get_weighted_game_grid(game_grid):
 
 def get_direction(x, y):
     print("X: {}, Y: {}".format(x, y))
-    move = None
+    next_move = None
     if x == 0:
         if y == -1:
-            move = ReturnDirections.SOUTH
+            next_move = ReturnDirections.SOUTH
         if y == 1:
-            move = ReturnDirections.NORTH
+            next_move = ReturnDirections.NORTH
     elif y == 0:
         if x == -1:
-            move = ReturnDirections.EAST
+            next_move = ReturnDirections.EAST
         if x == 1:
-            move = ReturnDirections.WEST
+            next_move = ReturnDirections.WEST
 
-    if not move:
+    if not next_move:
         print("WTF doing random shit!!!")
-        move = ReturnDirections.random()
-    print("DON'T STOP MOVING: " + move)
+        next_move = ReturnDirections.random()
+    print("DON'T STOP MOVING: " + next_move)
 
 def printStateNice(gState):
     print("Game State:")
