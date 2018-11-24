@@ -34,6 +34,6 @@ class PathFinder(AStar):
             ]
             if self.grid[ny][nx] > 0]
 
-        # print('Got node', node)
-        # print('possible_nodes', possible_nodes)
+        #print('Got node', node)
+        #print('possible_nodes', possible_nodes)
         return possible_nodes
