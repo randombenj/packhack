@@ -23,18 +23,33 @@ def move():
     start = time.time()
     data = PublicGameState(ext_dict=bottle.request.json)
     agent_id = data.agent_id
+    
     our_player = data.publicPlayers[agent_id]
     our_x, our_y = our_player['position']
     our_y = int((len(data.gameField) - our_y) - 1)
     our_x = int(our_x)
+
+    if agent_id == 0:
+        enemy_id = 1
+    else: 
+        enemy_id = 0
+
+    enemy_player = data.publicPlayers[enemy_id]
+    enemy_x, enemy_y = enemy_player['position']
+    enemy_y = int((len(data.gameField) - enemy_y) - 1)
+    enemy_x = int(enemy_x)
+    
+    enemy_point = (enemy_x, enemy_y)
+
     game_grid = data.gameField
     game_grid.reverse()
     
-    weighted_game_grid = get_weighted_game_grid(data.gameField, agent_id)
+    weighted_game_grid = get_weighted_game_grid(data.gameField, agent_id, enemy_point)
+    print(weighted_game_grid)
 
     from .bstar import PathFinder
 
-    print_state_nice(game_grid, our_x, our_y)
+    print_state_nice(game_grid, our_x, our_y, enemy_x, enemy_y)
     print("OUR X: {}, OUR Y: {}".format(our_x, our_y))
 
     
@@ -127,24 +142,31 @@ def find_point(game_grid, search_for, agent_id):
                 return (half_of_length + x, y)
     elif agent_id == 1:
         for y, rows in enumerate(game_grid):
-            if search_for in rows[:half_of_length]:
-                x = rows[:half_of_length].index(search_for)
+            if search_for in rows[0:half_of_length]:
+                x = rows[0:half_of_length].index(search_for)
                 return (x, y)
 
 
-def get_weighted_game_grid(game_grid, agent_id):
+def get_weighted_game_grid(game_grid, agent_id, enemy_point):
     field_lenght = int(len(game_grid[0]) / 2)
+    e_x, e_y = enemy_point
     weighted_game_grid = []
-    for rows in game_grid:
+    for idx_y,rows in enumerate(game_grid):
         weighted_row = []
-        for idx,col in enumerate(rows):
-            w = 1
+        for idx_x,col in enumerate(rows):
+            w = 3
             if col == "%":
                 w = 0
-            elif col == "o" and compare_based_on_agent(idx, field_lenght, agent_id):
-                w = 5
-            elif col == "°" and compare_based_on_agent(idx, field_lenght, agent_id):
-                w = 2
+            elif col == "o" and compare_based_on_agent(idx_x, field_lenght, agent_id):
+                w = 8
+            elif col == "°" and compare_based_on_agent(idx_x, field_lenght, agent_id):
+                w = 6
+            
+            
+            if abs(e_x - idx_x) < 4 and abs((e_y-2) - idx_y) < 4:
+                w = 1
+                if col == "%":
+                    w = 0
             weighted_row.append(w)
         weighted_game_grid.append(weighted_row)
     return weighted_game_grid
@@ -176,12 +198,14 @@ def get_direction(x, y):
     print("DON'T STOP MOVING: " + next_move)
     return next_move
 
-def print_state_nice(gameField, our_x, our_y):
+def print_state_nice(gameField, our_x, our_y, e_x, e_y):
     print("Game State:")
     for y,row in enumerate(gameField):
         for x,col in enumerate(row):
             if y == our_y and x == our_x:
                 print(":D",end =" ")
+            elif y == e_x and x == e_y:
+                print(":(",end =" ")
             else:
                 print(col, end =" ")
         print()
