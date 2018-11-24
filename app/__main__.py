@@ -84,7 +84,7 @@ def get_next_point(data, game_grid, agent_id, our_x, our_y):
             return desired_point
         else:
             if last_desired_point is None and last_home_point is None:
-                desired_point = find_point(data.gameField, "o")
+                desired_point = find_point(data.gameField, "o",agent_id)
                 last_desired_point = desired_point
                 return desired_point
 
@@ -93,9 +93,9 @@ def get_next_point(data, game_grid, agent_id, our_x, our_y):
                 last_desired_point_reached = False
 
                 if eaten_big_points < 2:
-                    desired_point = find_point(data.gameField, "o")
+                    desired_point = find_point(data.gameField, "o", agent_id)
                 else:
-                    desired_point = find_point(data.gameField, "°")
+                    desired_point = find_point(data.gameField, "°", agent_id)
 
                 last_desired_point = desired_point
                 return desired_point
@@ -117,12 +117,19 @@ def find_point_home(game_grid, agent_id):
             return (x, y)
 
 
-def find_point(game_grid, search_for):
+def find_point(game_grid, search_for, agent_id):
     half_of_length = int(len(game_grid[0]) / 2)
-    for y, rows in enumerate(game_grid):
-        if search_for in rows[half_of_length:]:
-            x = rows[half_of_length:].index(search_for)
-            return (half_of_length + x, y)
+
+    if agent_id == 0:
+        for y, rows in enumerate(game_grid):
+            if search_for in rows[half_of_length:]:
+                x = rows[half_of_length:].index(search_for)
+                return (half_of_length + x, y)
+    elif agent_id == 1:
+        for y, rows in enumerate(game_grid):
+            if search_for in rows[:half_of_length]:
+                x = rows[:half_of_length].index(search_for)
+                return (x, y)
 
 
 def get_weighted_game_grid(game_grid, agent_id):
